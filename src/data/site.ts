@@ -16,10 +16,18 @@ export const site = {
   },
 };
 
-export const coverages = {
-  featured: ["Sume Salud", "OSDE", "Sancor Salud"],
-  others: ["OMINT", "Prevención Salud", "APROSS", "SIPSSA", "OSSACRA", "Premedic"],
-};
+// The client asked to highlight the first three, so they lead the list.
+export const coverages = [
+  "Sume Salud",
+  "OSDE",
+  "Sancor Salud",
+  "OMINT",
+  "Prevención Salud",
+  "APROSS",
+  "SIPSSA",
+  "OSSACRA",
+  "Premedic",
+];
 
 export const bookingMessage = "Hola Dents, quisiera reservar un turno.";
 

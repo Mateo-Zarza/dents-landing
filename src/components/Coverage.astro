@@ -14,14 +14,9 @@ import { coverages, whatsappLink } from "../data/site";
       </h2>
     </div>
 
-    <ul class="coverage__featured">
-      {coverages.featured.map((name) => <li class="reveal">{name}</li>)}
-    </ul>
-
-    <div class="coverage__others reveal">
-      <p class="coverage__label">También atendemos</p>
+    <div class="coverage__grid reveal">
       <ul>
-        {coverages.others.map((name) => <li>{name}</li>)}
+        {coverages.map((name) => <li>{name}</li>)}
       </ul>
     </div>
 
@@ -69,55 +64,41 @@ import { coverages, whatsappLink } from "../data/site";
     margin-top: 24px;
   }
 
-  .coverage__featured {
+  /* Inner hairlines only: cells draw right/bottom borders and the wrapper
+     clips the outer ones, so it works for any column count. */
+  .coverage__grid {
+    margin-top: clamp(48px, 7vw, 88px);
+    border-block: 1px solid var(--line-light);
+    overflow: hidden;
+  }
+
+  .coverage__grid ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    margin-top: clamp(48px, 7vw, 88px);
-    border-top: 1px solid var(--line-light);
-    border-bottom: 1px solid var(--line-light);
+    margin: 0 -1px -1px 0;
   }
 
-  .coverage__featured li {
-    padding: clamp(32px, 4.5vw, 56px) 8px;
-    font-size: clamp(1.25rem, 2.4vw, 1.9rem);
-    font-weight: 300;
-    letter-spacing: 0.14em;
+  .coverage__grid li {
+    display: grid;
+    place-items: center;
+    min-height: clamp(96px, 10vw, 128px);
+    padding: 20px 12px;
+    border-right: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+    font-size: clamp(1rem, 1.6vw, 1.3rem);
+    font-weight: 400;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     text-align: center;
+    transition: background-color 0.4s var(--ease);
   }
 
-  .coverage__featured li + li {
-    border-left: 1px solid var(--line-light);
-  }
-
-  .coverage__others {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 16px 40px;
-    margin-top: 40px;
-  }
-
-  .coverage__label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--stone);
-  }
-
-  .coverage__others ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 32px;
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    color: rgba(255, 255, 255, 0.82);
+  .coverage__grid li:hover {
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .coverage__note {
-    margin-top: 28px;
+    margin-top: 32px;
     color: rgba(255, 255, 255, 0.6);
   }
 
@@ -134,17 +115,18 @@ import { coverages, whatsappLink } from "../data/site";
   }
 
   @media (max-width: 700px) {
-    .coverage__featured {
-      grid-template-columns: 1fr;
+    .coverage__grid ul {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .coverage__featured li {
-      padding-block: 26px;
+    .coverage__grid li {
+      min-height: 84px;
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
     }
 
-    .coverage__featured li + li {
-      border-left: 0;
-      border-top: 1px solid var(--line-light);
+    .coverage__grid li:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
     }
 
     .coverage__note a {
