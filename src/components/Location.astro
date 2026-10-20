@@ -1,12 +1,5 @@
 ---
-import WhatsApp from "../assets/icons/whatsapp.svg";
-import {
-  site,
-  whatsappLink,
-  instagramLink,
-  mapsEmbedSrc,
-  mapsDirectionsLink,
-} from "../data/site";
+import { site, instagramLink, mapsEmbedSrc, mapsDirectionsLink } from "../data/site";
 ---
 
 <section id="ubicacion" class="section location">
@@ -21,7 +14,7 @@ import {
       <dl class="location__contact">
         <div>
           <dt>WhatsApp</dt>
-          <dd><a href={whatsappLink()} target="_blank" rel="noopener">{site.whatsapp.display}</a></dd>
+          <dd>{site.whatsapp.display}</dd>
         </div>
         <div>
           <dt>Email</dt>
@@ -34,10 +27,6 @@ import {
       </dl>
 
       <div class="actions">
-        <a class="btn btn--dark" href={whatsappLink()} target="_blank" rel="noopener">
-          <WhatsApp aria-hidden="true" fill="currentColor" />
-          Reserva tu turno
-        </a>
         <a class="btn btn--outline" href={mapsDirectionsLink} target="_blank" rel="noopener">
           Cómo llegar
         </a>
