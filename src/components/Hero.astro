@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets";
+import hero from "../assets/hero.jpg";
+import WhatsApp from "../assets/icons/whatsapp.svg";
+import { site, whatsappLink, instagramLink } from "../data/site";
+---
+
+<section class="hero">
+  <Image
+    src={hero}
+    alt="Consultorio de Dents con sillón odontológico"
+    class="hero__img"
+    widths={[640, 960, hero.width]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="hero__shade" aria-hidden="true"></div>
+
+  <div class="container hero__content">
+    <p class="eyebrow hero__eyebrow reveal">Centro odontológico · {site.address.city}</p>
+    <h1 class="hero__title reveal">Tu sonrisa,<br /><strong>en buenas manos.</strong></h1>
+    <p class="hero__lead reveal">
+      Atención odontológica personalizada, en un espacio pensado para que te sientas cómodo desde
+      que llegás.
+    </p>
+    <div class="actions reveal">
+      <a class="btn btn--light" href={whatsappLink()} target="_blank" rel="noopener">
+        <WhatsApp aria-hidden="true" fill="currentColor" />
+        Reserva tu turno
+      </a>
+      <a class="btn btn--outline" href="#ubicacion">Cómo llegar</a>
+    </div>
+  </div>
+
+  <div class="container hero__meta">
+    <span>{site.address.street} · {site.address.city}, {site.address.province}</span>
+    <a href={instagramLink} target="_blank" rel="noopener">@{site.instagram}</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: max(620px, 100svh);
+    color: var(--white);
+    background: var(--ink-deep);
+    overflow: hidden;
+  }
+
+  .hero :global(.hero__img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 40% 50%;
+  }
+
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(29, 29, 27, 0.88) 0%, rgba(29, 29, 27, 0.6) 50%, rgba(29, 29, 27, 0.3) 100%),
+      linear-gradient(0deg, rgba(29, 29, 27, 0.7) 0%, rgba(29, 29, 27, 0) 45%);
+  }
+
+  .hero__content {
+    position: relative;
+    padding-top: calc(var(--header-h) + 64px);
+    padding-bottom: clamp(56px, 9vw, 112px);
+  }
+
+  .hero__eyebrow {
+    color: var(--mist);
+  }
+
+  .hero__title {
+    margin-top: 28px;
+    font-size: clamp(2.6rem, 7vw, 5.6rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .hero__title strong {
+    font-weight: 800;
+  }
+
+  .hero__lead {
+    max-width: 34rem;
+    margin-top: 28px;
+    margin-bottom: 44px;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .hero__meta {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 22px;
+    border-top: 1px solid var(--line-light);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .hero__meta a:hover {
+    color: var(--white);
+  }
+
+  .reveal:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .reveal:nth-child(3) {
+    transition-delay: 0.2s;
+  }
+
+  .reveal:nth-child(4) {
+    transition-delay: 0.3s;
+  }
+
+  @media (max-width: 600px) {
+    .hero__meta {
+      flex-direction: column;
+      gap: 6px;
+      letter-spacing: 0.16em;
+    }
+  }
+</style>

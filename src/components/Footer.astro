@@ -1,0 +1,101 @@
+---
+import Logo from "../assets/brand/logo.svg";
+import WhatsApp from "../assets/icons/whatsapp.svg";
+import Instagram from "../assets/icons/instagram.svg";
+import { site, whatsappLink, instagramLink } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <Logo class="footer__logo" role="img" aria-label={site.name} />
+
+    <address class="footer__col">
+      <span>{site.address.street}</span>
+      <span>{site.address.city}, {site.address.province}</span>
+      <span>CP {site.address.postalCode}</span>
+    </address>
+
+    <div class="footer__col">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <div class="footer__social">
+        <a href={whatsappLink()} target="_blank" rel="noopener" aria-label="WhatsApp">
+          <WhatsApp aria-hidden="true" fill="currentColor" />
+        </a>
+        <a href={instagramLink} target="_blank" rel="noopener" aria-label="Instagram">
+          <Instagram aria-hidden="true" fill="currentColor" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <span>© {year} {site.name}</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink-deep);
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.92rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    padding-block: 80px 64px;
+  }
+
+  .footer :global(.footer__logo) {
+    width: 190px;
+    height: auto;
+    color: var(--mist);
+  }
+
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-style: normal;
+  }
+
+  .footer__col a {
+    transition: color 0.3s var(--ease);
+  }
+
+  .footer__col a:hover {
+    color: var(--white);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 18px;
+    margin-top: 14px;
+  }
+
+  .footer__social :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .footer__bottom {
+    padding-block: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 860px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-block: 64px 48px;
+    }
+  }
+</style>

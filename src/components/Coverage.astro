@@ -1,0 +1,155 @@
+---
+import Isologo from "../assets/brand/isologo.svg";
+import { coverages, whatsappLink } from "../data/site";
+---
+
+<section id="coberturas" class="section coverage">
+  <Isologo class="coverage__mark" aria-hidden="true" />
+
+  <div class="container coverage__inner">
+    <div class="coverage__head reveal">
+      <p class="eyebrow">Coberturas</p>
+      <h2 class="display">
+        Trabajamos con las principales <strong>obras sociales y prepagas.</strong>
+      </h2>
+    </div>
+
+    <ul class="coverage__featured">
+      {coverages.featured.map((name) => <li class="reveal">{name}</li>)}
+    </ul>
+
+    <div class="coverage__others reveal">
+      <p class="coverage__label">También atendemos</p>
+      <ul>
+        {coverages.others.map((name) => <li>{name}</li>)}
+      </ul>
+    </div>
+
+    <p class="coverage__note reveal">
+      Y pacientes particulares.
+      <a
+        href={whatsappLink("Hola Dents, quería consultar si atienden con mi obra social.")}
+        target="_blank"
+        rel="noopener"
+      >
+        Consultá tu cobertura <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .coverage {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .coverage :global(.coverage__mark) {
+    position: absolute;
+    top: 50%;
+    right: -6%;
+    width: clamp(320px, 42vw, 620px);
+    height: auto;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.035);
+    pointer-events: none;
+  }
+
+  .coverage__inner {
+    position: relative;
+  }
+
+  .coverage__head {
+    max-width: 46rem;
+  }
+
+  .coverage__head .display {
+    margin-top: 24px;
+  }
+
+  .coverage__featured {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: clamp(48px, 7vw, 88px);
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+  }
+
+  .coverage__featured li {
+    padding: clamp(32px, 4.5vw, 56px) 8px;
+    font-size: clamp(1.25rem, 2.4vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .coverage__featured li + li {
+    border-left: 1px solid var(--line-light);
+  }
+
+  .coverage__others {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    margin-top: 40px;
+  }
+
+  .coverage__label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  .coverage__others ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .coverage__note {
+    margin-top: 28px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .coverage__note a {
+    margin-left: 10px;
+    color: var(--white);
+    font-weight: 600;
+    border-bottom: 1px solid var(--line-light);
+    transition: border-color 0.3s var(--ease);
+  }
+
+  .coverage__note a:hover {
+    border-color: var(--white);
+  }
+
+  @media (max-width: 700px) {
+    .coverage__featured {
+      grid-template-columns: 1fr;
+    }
+
+    .coverage__featured li {
+      padding-block: 26px;
+    }
+
+    .coverage__featured li + li {
+      border-left: 0;
+      border-top: 1px solid var(--line-light);
+    }
+
+    .coverage__note a {
+      display: inline-block;
+      margin: 8px 0 0;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+import Gallery from "./Gallery.astro";
+
+const pillars = [
+  {
+    title: "Atención personalizada",
+    text: "Turnos con el tiempo necesario para escucharte y explicarte cada paso del tratamiento.",
+  },
+  {
+    title: "Un espacio pensado para vos",
+    text: "Consultorios modernos, luminosos y cómodos, en pleno centro de Villa María.",
+  },
+  {
+    title: "Tu cobertura, bienvenida",
+    text: "Trabajamos con las principales obras sociales y prepagas, y también con pacientes particulares.",
+  },
+];
+---
+
+<section id="centro" class="section about">
+  <div class="container">
+    <div class="about__intro">
+      <div class="about__heading reveal">
+        <p class="eyebrow">El centro</p>
+        <h2 class="display about__title">Odontología con <strong>calidez</strong> y precisión.</h2>
+      </div>
+
+      <div class="about__body reveal">
+        <p class="lead">
+          En Dents cuidamos tu salud bucal con un enfoque cercano y profesional, para que cada
+          consulta sea una experiencia tranquila.
+        </p>
+        <ul class="about__pillars">
+          {
+            pillars.map((pillar, i) => (
+              <li>
+                <span class="about__index">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <Gallery />
+  </div>
+</section>
+
+<style>
+  .about__intro {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(40px, 8vw, 120px);
+    margin-bottom: clamp(64px, 9vw, 120px);
+  }
+
+  .about__heading {
+    position: sticky;
+    top: calc(var(--header-h) + 48px);
+    align-self: start;
+  }
+
+  .about__title {
+    margin-top: 24px;
+  }
+
+  .about__pillars {
+    margin-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+
+  .about__pillars li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    padding-block: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about__index {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--stone);
+    line-height: 2.1;
+  }
+
+  .about__pillars h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .about__pillars p {
+    margin-top: 6px;
+    color: var(--text-soft);
+    font-size: 0.98rem;
+  }
+
+  @media (max-width: 860px) {
+    .about__intro {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .about__heading {
+      position: static;
+    }
+
+    .about__pillars {
+      margin-top: 36px;
+    }
+
+    .about__pillars li {
+      grid-template-columns: 44px 1fr;
+      padding-block: 22px;
+    }
+  }
+</style>

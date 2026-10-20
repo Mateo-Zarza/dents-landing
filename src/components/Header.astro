@@ -1,0 +1,142 @@
+---
+import Wordmark from "../assets/brand/wordmark.svg";
+import { whatsappLink } from "../data/site";
+---
+
+<header class="header" data-header>
+  <div class="container header__inner">
+    <a href={import.meta.env.BASE_URL} class="header__logo" aria-label="Dents, ir al inicio">
+      <Wordmark aria-hidden="true" />
+    </a>
+
+    <nav class="header__nav" aria-label="Secciones">
+      <a href="#centro">El centro</a>
+      <a href="#coberturas">Coberturas</a>
+      <a href="#ubicacion">Ubicación</a>
+    </nav>
+
+    <a class="btn header__cta" href={whatsappLink()} target="_blank" rel="noopener">
+      Reserva tu turno
+    </a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const sync = () => header?.classList.toggle("is-scrolled", window.scrollY > 24);
+  sync();
+  window.addEventListener("scroll", sync, { passive: true });
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    color: var(--white);
+    transition:
+      background-color 0.4s var(--ease),
+      color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  .header.is-scrolled {
+    background: rgba(245, 244, 242, 0.92);
+    backdrop-filter: saturate(1.2) blur(14px);
+    -webkit-backdrop-filter: saturate(1.2) blur(14px);
+    color: var(--ink);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    height: var(--header-h);
+  }
+
+  .header__logo :global(svg) {
+    height: 30px;
+    width: auto;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: 36px;
+    margin-left: auto;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .header__nav a {
+    position: relative;
+    padding-block: 6px;
+    opacity: 0.85;
+    transition: opacity 0.3s var(--ease);
+  }
+
+  .header__nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .header__nav a:hover {
+    opacity: 1;
+  }
+
+  .header__nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .header__cta {
+    min-height: 44px;
+    padding-inline: 22px;
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  .header__cta:hover {
+    background: var(--mist);
+  }
+
+  .is-scrolled .header__cta {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .is-scrolled .header__cta:hover {
+    background: var(--ink-deep);
+  }
+
+  @media (max-width: 860px) {
+    .header__nav {
+      display: none;
+    }
+
+    .header__inner {
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header__logo :global(svg) {
+      height: 24px;
+    }
+
+    .header__cta {
+      min-height: 40px;
+      padding-inline: 16px;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+    }
+  }
+</style>

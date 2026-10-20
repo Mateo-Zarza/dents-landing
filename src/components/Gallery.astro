@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import Isologo from "../assets/brand/isologo.svg";
+
+// Any image dropped into src/assets/gallery shows up here, sorted by filename.
+// Alt text comes from the name: "sala-de-espera.jpg" -> "Sala de espera".
+const files = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/gallery/*.{jpg,jpeg,png,webp,avif}",
+  { eager: true },
+);
+
+const photos = Object.entries(files)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const name = path.split("/").pop()!.replace(/\.\w+$/, "").replace(/^\d+[-_]*/, "").replace(/[-_]+/g, " ").trim();
+    return { src: mod.default, alt: name.charAt(0).toUpperCase() + name.slice(1) };
+  });
+
+const PLACEHOLDERS = 5;
+---
+
+<div class="gallery">
+  {
+    photos.length
+      ? photos.map((photo, i) => (
+          <figure class="gallery__item reveal">
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={i === 0 ? [640, 960, 1280] : [400, 640, 800]}
+              sizes={i === 0 ? "(min-width: 861px) 50vw, 100vw" : "(min-width: 861px) 25vw, 50vw"}
+            />
+          </figure>
+        ))
+      : Array.from({ length: PLACEHOLDERS }, () => (
+          <div class="gallery__item gallery__item--empty reveal" aria-hidden="true">
+            <Isologo />
+          </div>
+        ))
+  }
+</div>
+
+<style>
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: clamp(180px, 20vw, 260px);
+    gap: 16px;
+  }
+
+  .gallery__item {
+    position: relative;
+    overflow: hidden;
+    background: var(--mist);
+  }
+
+  .gallery__item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .gallery__item :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s var(--ease);
+  }
+
+  .gallery__item:hover :global(img) {
+    transform: scale(1.04);
+  }
+
+  .gallery__item--empty {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #e6e5e2, #d9d8d5);
+    color: rgba(44, 44, 44, 0.08);
+  }
+
+  .gallery__item--empty :global(svg) {
+    width: 22%;
+    min-width: 44px;
+    height: auto;
+  }
+
+  .gallery__item:nth-child(2) {
+    transition-delay: 0.08s;
+  }
+
+  .gallery__item:nth-child(3) {
+    transition-delay: 0.16s;
+  }
+
+  .gallery__item:nth-child(4) {
+    transition-delay: 0.24s;
+  }
+
+  .gallery__item:nth-child(5) {
+    transition-delay: 0.32s;
+  }
+
+  @media (max-width: 860px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 42vw;
+      gap: 10px;
+    }
+
+    .gallery__item:first-child {
+      grid-row: span 1;
+    }
+  }
+</style>

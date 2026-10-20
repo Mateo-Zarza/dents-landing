@@ -1,0 +1,68 @@
+---
+import "@fontsource-variable/montserrat";
+import "../styles/global.css";
+import { getImage } from "astro:assets";
+import hero from "../assets/hero.jpg";
+import favicon from "../assets/brand/favicon.svg?url";
+import { site, instagramLink } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} · Villa María`, description = site.description } = Astro.props;
+
+const ogImage = await getImage({ src: hero, width: 1200, format: "jpg" });
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+// The github.io build is only a client preview; keep it out of search results.
+const isPreview = Astro.site?.hostname.endsWith("github.io");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Dentist",
+  name: site.name,
+  image: ogImageUrl.href,
+  url: canonical.href,
+  telephone: `+${site.whatsapp.number}`,
+  email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.province,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  sameAs: [instagramLink],
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {isPreview && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={favicon} />
+    <meta name="theme-color" content="#2c2c2c" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,215 @@
+:root {
+  /* Brand manual: #2c2c2c, #acaba9 and the #eaeaea used on dark backgrounds */
+  --ink: #2c2c2c;
+  --ink-deep: #1d1d1b;
+  --stone: #acaba9;
+  --mist: #eaeaea;
+  --paper: #f5f4f2;
+  --white: #ffffff;
+  --text-soft: #5f5e5b;
+  --line: rgba(44, 44, 44, 0.14);
+  --line-light: rgba(255, 255, 255, 0.16);
+
+  --font: "Montserrat Variable", "Montserrat", system-ui, sans-serif;
+  --container: 1200px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --section-y: clamp(88px, 12vw, 160px);
+  --header-h: 76px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.container {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+}
+
+.display {
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.display strong {
+  font-weight: 800;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: var(--text-soft);
+  text-wrap: pretty;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 0 30px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.35s var(--ease),
+    color 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.btn--dark {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.btn--dark:hover {
+  background: var(--ink-deep);
+}
+
+.btn--light {
+  background: var(--white);
+  color: var(--ink);
+}
+
+.btn--light:hover {
+  background: var(--mist);
+}
+
+.btn--outline {
+  border-color: currentColor;
+}
+
+.btn--outline:hover {
+  background: rgba(127, 127, 127, 0.12);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .eyebrow {
+    letter-spacing: 0.22em;
+  }
+
+  .actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Scroll reveal; only hides content once JS is known to run */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1.1s var(--ease),
+    transform 1.1s var(--ease);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

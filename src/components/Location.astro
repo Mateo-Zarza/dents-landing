@@ -1,0 +1,143 @@
+---
+import WhatsApp from "../assets/icons/whatsapp.svg";
+import {
+  site,
+  whatsappLink,
+  instagramLink,
+  mapsEmbedSrc,
+  mapsDirectionsLink,
+} from "../data/site";
+---
+
+<section id="ubicacion" class="section location">
+  <div class="container location__grid">
+    <div class="location__info reveal">
+      <p class="eyebrow">Ubicación</p>
+      <h2 class="display location__title">
+        {site.address.street},<br /><strong>{site.address.city}</strong>
+      </h2>
+      <p class="lead">{site.address.province} · CP {site.address.postalCode}</p>
+
+      <dl class="location__contact">
+        <div>
+          <dt>WhatsApp</dt>
+          <dd><a href={whatsappLink()} target="_blank" rel="noopener">{site.whatsapp.display}</a></dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+        </div>
+        <div>
+          <dt>Instagram</dt>
+          <dd><a href={instagramLink} target="_blank" rel="noopener">@{site.instagram}</a></dd>
+        </div>
+      </dl>
+
+      <div class="actions">
+        <a class="btn btn--dark" href={whatsappLink()} target="_blank" rel="noopener">
+          <WhatsApp aria-hidden="true" fill="currentColor" />
+          Reserva tu turno
+        </a>
+        <a class="btn btn--outline" href={mapsDirectionsLink} target="_blank" rel="noopener">
+          Cómo llegar
+        </a>
+      </div>
+    </div>
+
+    <div class="location__map reveal">
+      <iframe
+        src={mapsEmbedSrc}
+        title={`Mapa: ${site.name}, ${site.address.street}, ${site.address.city}`}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location {
+    background: var(--white);
+  }
+
+  .location__grid {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(40px, 7vw, 100px);
+    align-items: center;
+  }
+
+  .location__title {
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  .location__contact {
+    margin-block: 40px 44px;
+    border-top: 1px solid var(--line);
+  }
+
+  .location__contact div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .location__contact dt {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--stone);
+    line-height: 2.2;
+  }
+
+  .location__contact dd {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-weight: 500;
+  }
+
+  .location__contact a {
+    transition: color 0.3s var(--ease);
+  }
+
+  .location__contact a:hover {
+    color: var(--text-soft);
+  }
+
+  .location__map {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--mist);
+    overflow: hidden;
+  }
+
+  .location__map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.6s var(--ease);
+  }
+
+  .location__map:hover iframe {
+    filter: none;
+  }
+
+  @media (max-width: 860px) {
+    .location__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .location__map {
+      aspect-ratio: 1 / 1;
+    }
+
+    .location__contact div {
+      grid-template-columns: 100px 1fr;
+    }
+  }
+</style>
