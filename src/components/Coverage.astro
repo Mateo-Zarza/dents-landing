@@ -14,11 +14,9 @@ import { coverages, whatsappLink } from "../data/site";
       </h2>
     </div>
 
-    <div class="coverage__grid reveal">
-      <ul>
-        {coverages.map((name) => <li>{name}</li>)}
-      </ul>
-    </div>
+    <ul class="coverage__grid reveal">
+      {coverages.map((name) => <li>{name}</li>)}
+    </ul>
 
     <p class="coverage__note reveal">
       Y pacientes particulares.
@@ -64,33 +62,43 @@ import { coverages, whatsappLink } from "../data/site";
     margin-top: 24px;
   }
 
-  /* Inner hairlines only: cells draw right/bottom borders and the wrapper
-     clips the outer ones, so it works for any column count. */
+  /* Brick layout for the 9 coverages: 5 on top, 4 below shifted half a block.
+     Blocks span 2 of 10 columns; each draws right/bottom borders and only the
+     outer edges add top/left, so no line is doubled. */
   .coverage__grid {
-    margin-top: clamp(48px, 7vw, 88px);
-    border-block: 1px solid var(--line-light);
-    overflow: hidden;
-  }
-
-  .coverage__grid ul {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 0 -1px -1px 0;
+    grid-template-columns: repeat(10, 1fr);
+    margin-top: clamp(48px, 7vw, 88px);
   }
 
   .coverage__grid li {
+    grid-column: span 2;
     display: grid;
     place-items: center;
-    min-height: clamp(96px, 10vw, 128px);
-    padding: 20px 12px;
+    min-height: 76px;
+    padding: 14px 12px;
     border-right: 1px solid var(--line-light);
     border-bottom: 1px solid var(--line-light);
     font-size: clamp(1rem, 1.6vw, 1.3rem);
     font-weight: 400;
+    line-height: 1.3;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-align: center;
     transition: background-color 0.4s var(--ease);
+  }
+
+  .coverage__grid li:nth-child(-n + 5) {
+    border-top: 1px solid var(--line-light);
+  }
+
+  .coverage__grid li:nth-child(1),
+  .coverage__grid li:nth-child(6) {
+    border-left: 1px solid var(--line-light);
+  }
+
+  .coverage__grid li:nth-child(6) {
+    grid-column: 2 / span 2;
   }
 
   .coverage__grid li:hover {
@@ -114,21 +122,35 @@ import { coverages, whatsappLink } from "../data/site";
     border-color: var(--white);
   }
 
-  @media (max-width: 700px) {
-    .coverage__grid ul {
-      grid-template-columns: repeat(2, 1fr);
+  /* Two per row; the odd last block is centered by the same half-block shift. */
+  @media (max-width: 860px) {
+    .coverage__grid {
+      grid-template-columns: repeat(4, 1fr);
     }
 
-    .coverage__grid li {
-      min-height: 84px;
+    .coverage__grid li:nth-child(n) {
+      grid-column: span 2;
+      min-height: 68px;
+      border-top: 0;
+      border-left: 0;
       font-size: 0.92rem;
       letter-spacing: 0.08em;
     }
 
-    .coverage__grid li:last-child:nth-child(odd) {
-      grid-column: 1 / -1;
+    .coverage__grid li:nth-child(-n + 2) {
+      border-top: 1px solid var(--line-light);
     }
 
+    .coverage__grid li:nth-child(odd) {
+      border-left: 1px solid var(--line-light);
+    }
+
+    .coverage__grid li:last-child:nth-child(odd) {
+      grid-column: 2 / span 2;
+    }
+  }
+
+  @media (max-width: 700px) {
     .coverage__note a {
       display: inline-block;
       margin: 8px 0 0;
