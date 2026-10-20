@@ -1,6 +1,23 @@
 ---
 import Isologo from "../assets/brand/isologo.svg";
 import { coverages, whatsappLink } from "../data/site";
+
+// Logos live in src/assets/coverages, named after the coverage
+// ("Sancor Salud" -> sancor-salud.svg). Without a file the name is shown instead.
+const logoFiles = import.meta.glob<string>("../assets/coverages/*.{svg,png,webp}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+const slug = (name: string) =>
+  name.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, "-");
+
+const logoFor = (name: string) =>
+  Object.entries(logoFiles).find(([path]) => path.split("/").pop()!.replace(/\.\w+$/, "") === slug(name))?.[1];
+
+// Optical balance: compact bold wordmarks read bigger than logos with taglines.
+const logoScale: Record<string, number> = { osde: 0.66, apross: 0.84 };
 ---
 
 <section id="coberturas" class="section coverage">
@@ -14,8 +31,17 @@ import { coverages, whatsappLink } from "../data/site";
       </h2>
     </div>
 
-    <ul class="coverage__grid reveal">
-      {coverages.map((name) => <li>{name}</li>)}
+    <ul class="coverage__logos reveal">
+      {
+        coverages.map((name) => {
+          const logo = logoFor(name);
+          return (
+            <li style={`--scale: ${logoScale[slug(name)] ?? 1}`}>
+              {logo ? <img src={logo} alt={name} loading="lazy" decoding="async" /> : <span>{name}</span>}
+            </li>
+          );
+        })
+      }
     </ul>
 
     <p class="coverage__note reveal">
@@ -62,51 +88,51 @@ import { coverages, whatsappLink } from "../data/site";
     margin-top: 24px;
   }
 
-  /* Brick layout for the 9 coverages: 5 on top, 4 below shifted half a block.
-     Blocks span 2 of 10 columns; each draws right/bottom borders and only the
-     outer edges add top/left, so no line is doubled. */
-  .coverage__grid {
+  /* 5 on top, 4 below shifted half a slot so the bottom row sits centered:
+     each logo spans 2 of 10 columns and the 6th starts at column 2. */
+  .coverage__logos {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    margin-top: clamp(48px, 7vw, 88px);
+    row-gap: clamp(40px, 5vw, 64px);
+    margin-top: clamp(56px, 8vw, 104px);
   }
 
-  .coverage__grid li {
+  .coverage__logos li {
     grid-column: span 2;
     display: grid;
     place-items: center;
-    min-height: 76px;
-    padding: 14px 12px;
-    border-right: 1px solid var(--line-light);
-    border-bottom: 1px solid var(--line-light);
-    font-size: clamp(1rem, 1.6vw, 1.3rem);
-    font-weight: 400;
-    line-height: 1.3;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: center;
-    transition: background-color 0.4s var(--ease);
+    height: 46px;
+    padding-inline: clamp(14px, 2.4vw, 32px);
   }
 
-  .coverage__grid li:nth-child(-n + 5) {
-    border-top: 1px solid var(--line-light);
-  }
-
-  .coverage__grid li:nth-child(1),
-  .coverage__grid li:nth-child(6) {
-    border-left: 1px solid var(--line-light);
-  }
-
-  .coverage__grid li:nth-child(6) {
+  .coverage__logos li:nth-child(6) {
     grid-column: 2 / span 2;
   }
 
-  .coverage__grid li:hover {
-    background: rgba(255, 255, 255, 0.03);
+  /* Monochrome white so the brands' own colors don't fight the palette */
+  .coverage__logos img {
+    width: 100%;
+    height: calc(100% * var(--scale));
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.78;
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .coverage__logos span {
+    font-size: clamp(1rem, 1.6vw, 1.3rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.78;
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .coverage__logos li:hover > * {
+    opacity: 1;
   }
 
   .coverage__note {
-    margin-top: 32px;
+    margin-top: clamp(56px, 7vw, 88px);
     color: rgba(255, 255, 255, 0.6);
   }
 
@@ -122,31 +148,21 @@ import { coverages, whatsappLink } from "../data/site";
     border-color: var(--white);
   }
 
-  /* Two per row; the odd last block is centered by the same half-block shift. */
   @media (max-width: 860px) {
-    .coverage__grid {
-      grid-template-columns: repeat(4, 1fr);
+    .coverage__logos {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 36px;
     }
 
-    .coverage__grid li:nth-child(n) {
-      grid-column: span 2;
-      min-height: 68px;
-      border-top: 0;
-      border-left: 0;
-      font-size: 0.92rem;
+    .coverage__logos li:nth-child(n) {
+      grid-column: auto;
+      height: 38px;
+      padding-inline: 10px;
+    }
+
+    .coverage__logos span {
+      font-size: 0.85rem;
       letter-spacing: 0.08em;
-    }
-
-    .coverage__grid li:nth-child(-n + 2) {
-      border-top: 1px solid var(--line-light);
-    }
-
-    .coverage__grid li:nth-child(odd) {
-      border-left: 1px solid var(--line-light);
-    }
-
-    .coverage__grid li:last-child:nth-child(odd) {
-      grid-column: 2 / span 2;
     }
   }
 
