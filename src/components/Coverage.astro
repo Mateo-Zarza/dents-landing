@@ -17,7 +17,7 @@ const logoFor = (name: string) =>
   Object.entries(logoFiles).find(([path]) => path.split("/").pop()!.replace(/\.\w+$/, "") === slug(name))?.[1];
 
 // Optical balance: compact bold wordmarks read bigger than logos with taglines.
-const logoScale: Record<string, number> = { osde: 0.66, apross: 0.84 };
+const logoScale: Record<string, number> = { osde: 0.66, omint: 0.68, apross: 0.84 };
 ---
 
 <section id="coberturas" class="section coverage">
