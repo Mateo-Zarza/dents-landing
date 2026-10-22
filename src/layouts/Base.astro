@@ -16,8 +16,6 @@ const { title = `${site.name} · Villa María`, description = site.description }
 const ogImage = await getImage({ src: hero, width: 1200, format: "jpg" });
 const ogImageUrl = new URL(ogImage.src, Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site);
-// The github.io build is only a client preview; keep it out of search results.
-const isPreview = Astro.site?.hostname.endsWith("github.io");
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -46,7 +44,6 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {isPreview && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={favicon} />
     <meta name="theme-color" content="#2c2c2c" />
