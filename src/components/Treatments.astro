@@ -1,0 +1,122 @@
+---
+import { treatments } from "../data/site";
+---
+
+<section id="tratamientos" class="section treatments">
+  <div class="container">
+    <div class="treatments__head reveal">
+      <p class="eyebrow">Tratamientos</p>
+      <h2 class="display">Todo lo que tu sonrisa necesita, <strong>en un solo lugar.</strong></h2>
+    </div>
+
+    <div class="treatments__grid">
+      {
+        treatments.map((group, i) => (
+          <div class="treatments__group reveal">
+            <span class="treatments__index">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{group.title}</h3>
+            <ul>
+              {group.items.map((item) =>
+                typeof item === "string" ? (
+                  <li>{item}</li>
+                ) : (
+                  <li>
+                    {item.name}
+                    <span>{item.detail}</span>
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .treatments {
+    background: var(--white);
+  }
+
+  .treatments__head {
+    max-width: 46rem;
+  }
+
+  .treatments__head .display {
+    margin-top: 24px;
+  }
+
+  .treatments__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(32px, 4vw, 56px);
+    margin-top: clamp(56px, 8vw, 104px);
+  }
+
+  .treatments__group {
+    padding-top: 28px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .treatments__index {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--stone);
+  }
+
+  .treatments__group h3 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .treatments__group li {
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .treatments__group li span {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--text-soft);
+  }
+
+  .treatments__group:nth-child(2) {
+    transition-delay: 0.08s;
+  }
+
+  .treatments__group:nth-child(3) {
+    transition-delay: 0.16s;
+  }
+
+  .treatments__group:nth-child(4) {
+    transition-delay: 0.24s;
+  }
+
+  /* In four columns some titles wrap; reserve two lines so the lists line up */
+  @media (min-width: 1001px) {
+    .treatments__group h3 {
+      min-height: 2lh;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .treatments__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .treatments__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

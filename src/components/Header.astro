@@ -11,6 +11,7 @@ import { whatsappLink } from "../data/site";
 
     <nav class="header__nav" aria-label="Secciones">
       <a href="#centro">El centro</a>
+      <a href="#tratamientos">Tratamientos</a>
       <a href="#coberturas">Coberturas</a>
       <a href="#ubicacion">Ubicación</a>
     </nav>
@@ -62,12 +63,13 @@ import { whatsappLink } from "../data/site";
 
   .header__nav {
     display: flex;
-    gap: 36px;
+    gap: 28px;
     margin-left: auto;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .header__nav a {
@@ -118,11 +120,18 @@ import { whatsappLink } from "../data/site";
     background: var(--ink-deep);
   }
 
-  @media (max-width: 860px) {
+  /* Four links plus the CTA stop fitting below this width */
+  @media (max-width: 1040px) {
     .header__nav {
       display: none;
     }
 
+    .header__cta {
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 860px) {
     .header__inner {
       justify-content: space-between;
       gap: 16px;

@@ -29,7 +29,32 @@ export const coverages = [
   "Premedic",
 ];
 
-export const bookingMessage = "Hola Dents, quisiera reservar un turno.";
+// Pairs from the client's list that name the same treatment show as name + plain-language detail.
+export const treatments: { title: string; items: (string | { name: string; detail: string })[] }[] = [
+  {
+    title: "Diagnóstico",
+    items: ["Consultas de diagnóstico", "Diagnóstico digital"],
+  },
+  {
+    title: "Odontología general",
+    items: [
+      { name: "Operatoria dental", detail: "Arreglos dentales" },
+      { name: "Endodoncia", detail: "Tratamiento de conducto" },
+      "Periodoncia",
+      "Tratamientos en niños",
+    ],
+  },
+  {
+    title: "Ortodoncia y rehabilitación",
+    items: ["Ortodoncia", "Implantología", "Prótesis", "Rehabilitaciones complejas"],
+  },
+  {
+    title: "Estética",
+    items: ["Diseño de sonrisa", "Estética dental", "Carillas", "Armonización orofacial"],
+  },
+];
+
+export const bookingMessage ="Hola Dents, quisiera reservar un turno.";
 
 export const whatsappLink = (text = bookingMessage) =>
   `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(text)}`;
