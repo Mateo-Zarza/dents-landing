@@ -33,6 +33,12 @@ const jsonLd = {
     postalCode: site.address.postalCode,
     addressCountry: site.address.country,
   },
+  openingHoursSpecification: site.hours.map(({ dayOfWeek, opens, closes }) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek,
+    opens,
+    closes,
+  })),
   sameAs: [instagramLink],
 };
 ---

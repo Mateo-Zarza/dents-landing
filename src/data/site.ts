@@ -14,6 +14,16 @@ export const site = {
     postalCode: "5900",
     country: "AR",
   },
+  // `dayOfWeek` feeds the schema.org data so Google can show the hours
+  hours: [
+    {
+      days: "Lunes a viernes",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "20:00",
+    },
+    { days: "Sábados", dayOfWeek: ["Saturday"], opens: "09:00", closes: "13:00" },
+  ],
 };
 
 // The client asked to highlight the first three, so they lead the list.

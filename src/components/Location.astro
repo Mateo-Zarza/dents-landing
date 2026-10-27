@@ -1,5 +1,8 @@
 ---
 import { site, instagramLink, mapsEmbedSrc, mapsDirectionsLink } from "../data/site";
+
+// "08:00" -> "8", "08:30" -> "8:30"
+const hour = (time: string) => time.replace(/^0/, "").replace(/:00$/, "");
 ---
 
 <section id="ubicacion" class="section location">
@@ -12,6 +15,21 @@ import { site, instagramLink, mapsEmbedSrc, mapsDirectionsLink } from "../data/s
       <p class="lead">{site.address.province} · CP {site.address.postalCode}</p>
 
       <dl class="location__contact">
+        <div>
+          <dt>Horarios</dt>
+          <dd class="location__hours">
+            {
+              site.hours.map((slot) => (
+                <>
+                  <span>{slot.days}</span>
+                  <span>
+                    {hour(slot.opens)} a {hour(slot.closes)} h
+                  </span>
+                </>
+              ))
+            }
+          </dd>
+        </div>
         <div>
           <dt>WhatsApp</dt>
           <dd>{site.whatsapp.display}</dd>
@@ -87,6 +105,17 @@ import { site, instagramLink, mapsEmbedSrc, mapsDirectionsLink } from "../data/s
     min-width: 0;
     overflow-wrap: anywhere;
     font-weight: 500;
+  }
+
+  .location__hours {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 24px;
+  }
+
+  .location__hours span:nth-child(even) {
+    color: var(--text-soft);
+    font-weight: 400;
   }
 
   .location__contact a {
