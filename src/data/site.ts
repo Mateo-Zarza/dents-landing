@@ -39,28 +39,97 @@ export const coverages = [
   "Premedic",
 ];
 
-// Pairs from the client's list that name the same treatment show as name + plain-language detail.
-export const treatments: { title: string; items: (string | { name: string; detail: string })[] }[] = [
+// Each description shows when the visitor opens its treatment, one at a time.
+export const treatments: { title: string; items: { name: string; description: string }[] }[] = [
   {
     title: "Diagnóstico",
-    items: ["Consultas de diagnóstico", "Diagnóstico digital"],
+    items: [
+      {
+        name: "Consultas de diagnóstico",
+        description:
+          "Revisamos tu boca en detalle para detectar cualquier problema a tiempo y armar un plan de tratamiento a tu medida.",
+      },
+      {
+        name: "Diagnóstico digital",
+        description:
+          "Radiografías e imágenes digitales que muestran con precisión lo que no se ve a simple vista, para planificar cada tratamiento con seguridad.",
+      },
+    ],
   },
   {
     title: "Odontología general",
     items: [
-      { name: "Operatoria dental", detail: "Arreglos dentales" },
-      { name: "Endodoncia", detail: "Tratamiento de conducto" },
-      "Periodoncia",
-      "Tratamientos en niños",
+      {
+        name: "Operatoria dental",
+        description:
+          "Los clásicos arreglos dentales: tratamos las caries y reconstruimos los dientes dañados para que recuperen su forma y función.",
+      },
+      {
+        name: "Endodoncia",
+        description:
+          "El tratamiento de conducto: limpiamos el interior del diente cuando el nervio está afectado, para aliviar el dolor y conservar la pieza.",
+      },
+      {
+        name: "Periodoncia",
+        description:
+          "Cuidamos la salud de las encías y del hueso que sostiene los dientes, y tratamos el sangrado, la inflamación y la retracción.",
+      },
+      {
+        name: "Tratamientos en niños",
+        description:
+          "Atención pensada para los más chicos, con prevención y tratamientos en un ambiente tranquilo para que se sientan seguros.",
+      },
     ],
   },
   {
     title: "Ortodoncia y rehabilitación",
-    items: ["Ortodoncia", "Implantología", "Prótesis", "Rehabilitaciones complejas"],
+    items: [
+      {
+        name: "Ortodoncia",
+        description:
+          "Alineamos los dientes y corregimos la mordida para lograr una sonrisa pareja y una masticación correcta.",
+      },
+      {
+        name: "Implantología",
+        description:
+          "Reemplazamos los dientes perdidos con implantes fijos que se ven, se sienten y funcionan como dientes naturales.",
+      },
+      {
+        name: "Prótesis",
+        description:
+          "Coronas, puentes y prótesis para reponer las piezas que faltan y recuperar la comodidad al comer, hablar y sonreír.",
+      },
+      {
+        name: "Rehabilitaciones complejas",
+        description:
+          "Planificamos tratamientos integrales que combinan varias especialidades para devolverle la función y la estética a toda la boca.",
+      },
+    ],
   },
   {
     title: "Estética",
-    items: ["Diseño de sonrisa", "Estética dental", "Carillas", "Armonización orofacial"],
+    items: [
+      {
+        name: "Diseño de sonrisa",
+        description:
+          "Analizamos tu rostro, tus labios y tus dientes para planificar una sonrisa armoniosa y natural, pensada para vos.",
+      },
+      {
+        name: "Estética dental",
+        description:
+          "Tratamientos como el blanqueamiento para mejorar el color, la forma y el brillo de tus dientes.",
+      },
+      {
+        name: "Carillas",
+        description:
+          "Láminas muy finas que se adhieren al frente de los dientes para corregir su color, forma o tamaño de manera natural.",
+      },
+      {
+        name: "Armonización orofacial",
+        description:
+          "Tratamientos mínimamente invasivos que realzan y equilibran las facciones del rostro, en armonía con tu sonrisa.",
+      },
+    ],
   },
 ];
 

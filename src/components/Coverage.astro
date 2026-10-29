@@ -31,12 +31,12 @@ const logoScale: Record<string, number> = { osde: 0.66, omint: 0.68, apross: 0.8
       </h2>
     </div>
 
-    <ul class="coverage__logos reveal">
+    <ul class="coverage__logos">
       {
         coverages.map((name) => {
           const logo = logoFor(name);
           return (
-            <li style={`--scale: ${logoScale[slug(name)] ?? 1}`}>
+            <li class="reveal reveal--pop" style={`--scale: ${logoScale[slug(name)] ?? 1}`}>
               {logo ? <img src={logo} alt={name} loading="lazy" decoding="async" /> : <span>{name}</span>}
             </li>
           );

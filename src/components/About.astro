@@ -25,15 +25,15 @@ const pillars = [
         <h2 class="display about__title">Odontología con <strong>calidez</strong> y precisión.</h2>
       </div>
 
-      <div class="about__body reveal">
-        <p class="lead">
+      <div class="about__body">
+        <p class="lead reveal">
           En Dents cuidamos tu salud bucal con un enfoque cercano y profesional, para que cada
           consulta sea una experiencia tranquila.
         </p>
         <ul class="about__pillars">
           {
             pillars.map((pillar, i) => (
-              <li>
+              <li class="reveal">
                 <span class="about__index">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3>{pillar.title}</h3>

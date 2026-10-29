@@ -12,20 +12,22 @@ import { treatments } from "../data/site";
     <div class="treatments__grid">
       {
         treatments.map((group, i) => (
-          <div class="treatments__group reveal">
+          <div class="treatments__group reveal reveal--pop">
             <span class="treatments__index">{String(i + 1).padStart(2, "0")}</span>
             <h3>{group.title}</h3>
             <ul>
-              {group.items.map((item) =>
-                typeof item === "string" ? (
-                  <li>{item}</li>
-                ) : (
-                  <li>
-                    {item.name}
-                    <span>{item.detail}</span>
-                  </li>
-                ),
-              )}
+              {group.items.map((item) => (
+                <li>
+                  {/* A shared name makes the browser keep a single one open */}
+                  <details name="tratamiento">
+                    <summary>
+                      {item.name}
+                      <span class="treatments__toggle" aria-hidden="true" />
+                    </summary>
+                    <p>{item.description}</p>
+                  </details>
+                </li>
+              ))}
             </ul>
           </div>
         ))
@@ -75,30 +77,93 @@ import { treatments } from "../data/site";
   }
 
   .treatments__group li {
-    padding-block: 14px;
     border-bottom: 1px solid var(--line);
-    font-weight: 500;
-    line-height: 1.4;
   }
 
-  .treatments__group li span {
-    display: block;
-    margin-top: 2px;
-    font-size: 0.88rem;
-    font-weight: 400;
+  .treatments__group summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    list-style: none;
+    cursor: pointer;
+    transition: color 0.3s var(--ease);
+  }
+
+  .treatments__group summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .treatments__group summary:hover {
     color: var(--text-soft);
   }
 
-  .treatments__group:nth-child(2) {
-    transition-delay: 0.08s;
+  /* Plus that folds into a minus when open */
+  .treatments__toggle {
+    position: relative;
+    flex: none;
+    width: 11px;
+    height: 11px;
+    color: var(--stone);
   }
 
-  .treatments__group:nth-child(3) {
-    transition-delay: 0.16s;
+  .treatments__toggle::before,
+  .treatments__toggle::after {
+    content: "";
+    position: absolute;
+    inset: 5px 0 auto;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.4s var(--ease);
   }
 
-  .treatments__group:nth-child(4) {
-    transition-delay: 0.24s;
+  .treatments__toggle::after {
+    transform: rotate(90deg);
+  }
+
+  details[open] .treatments__toggle::after {
+    transform: none;
+  }
+
+  .treatments__group details p {
+    padding-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-soft);
+    text-wrap: pretty;
+  }
+
+  details[open] p {
+    animation: treatment-open 0.5s var(--ease);
+  }
+
+  @keyframes treatment-open {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  /* Smooth height where the browser can animate to auto; elsewhere it opens instantly */
+  @supports (interpolate-size: allow-keywords) {
+    .treatments__group details {
+      interpolate-size: allow-keywords;
+    }
+
+    .treatments__group details::details-content {
+      block-size: 0;
+      overflow-y: clip;
+      transition:
+        block-size 0.45s var(--ease),
+        content-visibility 0.45s allow-discrete;
+    }
+
+    .treatments__group details[open]::details-content {
+      block-size: auto;
+    }
   }
 
   /* In four columns some titles wrap; reserve two lines so the lists line up */

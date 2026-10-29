@@ -51,7 +51,7 @@ const hour = (time: string) => time.replace(/^0/, "").replace(/:00$/, "");
       </div>
     </div>
 
-    <div class="location__map reveal">
+    <div class="location__map reveal reveal--pop">
       <iframe
         src={mapsEmbedSrc}
         title={`Mapa: ${site.name}, ${site.address.street}, ${site.address.city}`}

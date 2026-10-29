@@ -23,7 +23,7 @@ const PLACEHOLDERS = 5;
   {
     photos.length
       ? photos.map((photo, i) => (
-          <figure class="gallery__item reveal">
+          <figure class="gallery__item reveal reveal--pop">
             <Image
               src={photo.src}
               alt={photo.alt}
@@ -33,7 +33,7 @@ const PLACEHOLDERS = 5;
           </figure>
         ))
       : Array.from({ length: PLACEHOLDERS }, () => (
-          <div class="gallery__item gallery__item--empty reveal" aria-hidden="true">
+          <div class="gallery__item gallery__item--empty reveal reveal--pop" aria-hidden="true">
             <Isologo />
           </div>
         ))
@@ -81,22 +81,6 @@ const PLACEHOLDERS = 5;
     width: 22%;
     min-width: 44px;
     height: auto;
-  }
-
-  .gallery__item:nth-child(2) {
-    transition-delay: 0.08s;
-  }
-
-  .gallery__item:nth-child(3) {
-    transition-delay: 0.16s;
-  }
-
-  .gallery__item:nth-child(4) {
-    transition-delay: 0.24s;
-  }
-
-  .gallery__item:nth-child(5) {
-    transition-delay: 0.32s;
   }
 
   @media (max-width: 860px) {
