@@ -3,7 +3,6 @@ import "@fontsource-variable/montserrat";
 import "../styles/global.css";
 import { getImage } from "astro:assets";
 import hero from "../assets/hero.jpg";
-import favicon from "../assets/brand/favicon.svg?url";
 import { site, instagramLink } from "../data/site";
 
 interface Props {
@@ -51,7 +50,11 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href={favicon} />
+    {/* Icons live in public/ so they keep stable, crawlable URLs (an imported SVG
+        gets inlined as a data: URI, which Google's favicon crawler can't use) */}
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#2c2c2c" />
     <meta name="format-detection" content="telephone=no" />
     <script is:inline>document.documentElement.classList.add("js");</script>
