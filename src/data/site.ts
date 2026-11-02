@@ -22,7 +22,6 @@ export const site = {
       opens: "08:00",
       closes: "20:00",
     },
-    { days: "Sábados", dayOfWeek: ["Saturday"], opens: "09:00", closes: "13:00" },
   ],
 };
 
